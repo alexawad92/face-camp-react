@@ -1,15 +1,20 @@
 // App.jsx
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Home';
-import EditCamp from './EditCamp';
+import CampgroundsList from './CampgroundsList';
+import CampgroundDetail from './CampgroundDetail';
+import Container from '@mui/material/Container';
 
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/camps/:id/edit" element={<EditCamp />} />
-      </Routes>
-    </Router>
+    <Container>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/campgrounds" element={<CampgroundsList />} />
+          <Route path="/campgrounds/:id" element={<CampgroundDetail />} />
+        </Routes>
+      </Router>
+    </Container>
   );
 }

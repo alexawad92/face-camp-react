@@ -8,7 +8,9 @@ const cors = require('cors');
 const mongoose = require("mongoose");
 const campgroundRoutes = require("./routes/campground");
 const Campground = require("./models/campground");
-const reviewsRoutes = require("./routes/reviews");
+const User = require("./models/user");
+const Review = require("./models/review");
+const morgan = require("morgan");
 
 // connect to mongo
 mongoose.connect("mongodb://localhost:27017/yelp-camp", {
@@ -27,6 +29,8 @@ db.once("open", () => {
 // set up express app
 const app = express();
 app.use(cors());
+app.use(morgan("tiny"));
+
 // setup express
 app.use(express.urlencoded({ extended: true }));
 

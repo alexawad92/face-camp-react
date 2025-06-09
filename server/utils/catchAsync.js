@@ -1,6 +1,6 @@
 module.exports = func=>{
     return (req, res, next)=>{
-        // console.log("I am in func ");
+        console.log("Im in fucn");
         func(req, res, next).catch(next);
     }
 }

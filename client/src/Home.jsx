@@ -1,23 +1,14 @@
-// Home.jsx
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import Camp from './Camp';
 
+import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
+import MainHeader from "./MainHeader"
 export default function Home() {
-  const [campgrounds, setCamps] = useState([]);
-
-  useEffect(() => {
-    axios.get('/api/campgrounds').then((res) => setCamps(res.data));
-  }, []);
-
-  return (
-    <div>
-      <h2>List of Camps</h2>
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-        {campgrounds.map((campground) => (
-          <Camp key={campground._id} campground={campground} />
-        ))}
-      </div>
-    </div>
-  );
+  const navigate = useNavigate();
+  function handleButtonClick(){
+    navigate(`/campgrounds`);
+  }
+    return (<>
+   <MainHeader/>
+    <button onClick={handleButtonClick}>Click Me </button>
+    </>);
 }

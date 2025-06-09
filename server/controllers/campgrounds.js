@@ -8,11 +8,14 @@ module.exports.index = async (req, res, next) => {
 };
 
 module.exports.renderNewForm = async (req, res, next) => {
+    console.log("renderNewForm");
+
   res.render("campgrounds/new");
   // here
 };
 
 module.exports.createCampground = async (req, res, next) => {
+  console.log("createCampground");
   const { campground } = req.body;
   campground.author = req.user._id;
   campground.images = req.files.map((f) => ({
@@ -34,6 +37,8 @@ module.exports.createCampground = async (req, res, next) => {
 };
 
 module.exports.showCampground = async (req, res, next) => {
+  console.log("showCampground");
+
   const { id } = req.params;
   const campground = await Campground.findById(id)
     .populate({
@@ -71,8 +76,10 @@ module.exports.showCampground = async (req, res, next) => {
     }
   );
 
-  // console.log(imageLink);
-  res.render("campgrounds/show", { campground, imageLink });
+  console.log(imageLink);
+  res.json(campground);
+//   res.send("HI");
+//  res.render("campgrounds/show", { campground, imageLink });
 };
 
 module.exports.renderEditForm = async (req, res, next) => {
@@ -82,7 +89,8 @@ module.exports.renderEditForm = async (req, res, next) => {
     req.flash("error", "Cannot find campground");
     return res.redirect("/campgrounds");
   }
-  res.render("campgrounds/edit", { campground });
+  res.json(campground);
+  //res.render("campgrounds/edit", { campground });
 };
 
 module.exports.deleteCampground = async (req, res, next) => {
