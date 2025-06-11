@@ -15,11 +15,11 @@ const theme = createTheme({
   typography:{
     h1:{
       fontSize:"3rem",
-      fontWeight:600,
+      fontWeight:500,
     },
     h2:{
       fontSize:"1.75rem",
-      fontWeight:600,
+      fontWeight:500,
     
     }
   }
@@ -27,8 +27,8 @@ const theme = createTheme({
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ThemeProvider theme={theme}>
+    {/* <ThemeProvider theme={theme}> */}
     <App />
-    </ThemeProvider>
+    {/* </ThemeProvider> */}
   </StrictMode>,
 )
