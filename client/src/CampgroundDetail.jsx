@@ -1,121 +1,137 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useNavigate } from 'react-router-dom';
-import ShareIcon from '@mui/icons-material/Share';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { Box, CardActions, Container, IconButton } from '@mui/material';
-import MainHeader from "./MainHeader"
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import Card from "@mui/material/Card";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 
-import axios from "axios";
-import { blue } from "@mui/material/colors";
+import CardHeader from "@mui/material/CardHeader";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import Collapse from "@mui/material/Collapse";
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import { red } from "@mui/material/colors";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShareIcon from "@mui/icons-material/Share";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+import Stack from "@mui/material/Stack";
+import Map from "./Map/Map";
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 800,
+  height: 800,
+  bgcolor: "background.paper",
+  boxShadow: 15,
+  p: 4,
+};
 
-export default function CampgroundDetail() {
-  const { id } = useParams(); // gets the :id from the URL
-  const [campground, setCampground] = useState(null);
-
-  function temp(data){
-    console.log("in data");
-  }
-
-  useEffect(() => {
-    console.log("useEffect");
-    axios.get(`/api/campgrounds/${id}/`).then(res => {
-      setCampground(res.data);
-    });
-  }, [id]);
-
-  if (!campground) return <div>Loading...</div>;
-
+export default function CampgroundDetail({
+  campground,
+  avatarIconColor,
+  onClose,
+}) {
   return (
     <>
- <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',   // horizontally center
-        alignItems: 'center',       // vertically center
-        height: '100vh',            // full viewport height
-      }}
-    >    
-  <Card sx={{ maxWidth: 500 }}>
-      <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: blue}} aria-label="campground">
-           {campground.title[0]}
-          </Avatar>
-        }
-       
-        title={campground.title}
-        subheader={campground.location}
-      />
-          <Box sx={{ position: 'relative', width: '100%', maxWidth: 600, mx: 'auto' }}>
-      <Card>
-        <CardMedia
-          component="img"
-          height="300"
-          image={campground.images[0].url}
-          alt={`Campground Image ${0 + 1}`}
-        />
-      </Card>
-
-      {/* Overlay Navigation Buttons */}
-      <IconButton
-        sx={{
-          position: 'absolute',
-          top: '50%',
-          left: 16,
-          transform: 'translateY(-50%)',
-          color: 'white',
-          backgroundColor: 'rgba(0,0,0,0.5)',
-          '&:hover': { backgroundColor: 'rgba(0,0,0,0.7)' }
-        }}
+      <Box
+        display={"flex"}
+        alignItems={"center"}
+        justifySelf={"center"}
+        height={"100vh"}
       >
-        <ArrowBackIosNewIcon />
-      </IconButton>
-
-      <IconButton
-        sx={{
-          position: 'absolute',
-          top: '50%',
-          right: 16,
-          transform: 'translateY(-50%)',
-          color: 'white',
-          backgroundColor: 'rgba(0,0,0,0.5)',
-          '&:hover': { backgroundColor: 'rgba(0,0,0,0.7)' }
-        }}
-      >
-        <ArrowForwardIosIcon />
-      </IconButton>
-    </Box>
-      <CardContent>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-         {campground.description}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <Button variant="outlined" >Info</Button>
-        <Box sx={{ ml: 'auto' }}>
-          <Button variant="text" startIcon={<DeleteIcon />}>
-            Delete
-          </Button>
+        <Card sx={{ height: "800px" }}>
+          <CardHeader
+            avatar={
+              <Avatar sx={{ bgcolor: avatarIconColor }} aria-label="recipe">
+                {campground.title[0]}
+              </Avatar>
+            }
+            action={
+              <IconButton aria-label="settings">
+                <MoreVertIcon />
+              </IconButton>
+            }
+            title={campground.title}
+            subheader={campground.location}
+          />
+          <Grid container sx={{ bgcolor: "blue" }} spacing={2}>
+            <Grid item>
+              <h1>alsdkj</h1>
+            </Grid>
+            <Grid item>
+              <Box sx={{ bgcolor: "red" }}>
+                <h1>alsdkj</h1>
+              </Box>
+            </Grid>
+          </Grid>
+          <CardContent>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              This impressive paella is a perfect party dish and a fun meal to
+              cook together with your guests. Add 1 cup of frozen peas along
+              with the mussels, if you like.
+            </Typography>
+          </CardContent>
+          <CardActions disableSpacing>
+            <IconButton aria-label="add to favorites">
+              <FavoriteIcon />
+            </IconButton>
+            <IconButton aria-label="share">
+              <ShareIcon
+                onClick={() => {
+                  onClose();
+                }}
+              />
+            </IconButton>
+          </CardActions>
+        </Card>
       </Box>
-      </CardActions>
-      </Card>
 
-  
-    </Box>
-      </>
+      {/* <Box sx={style}>
+        <Typography variant="h4">{campground.title}</Typography>
+        <Box>
+          <img
+            srcSet={`${campground.images[0].url}`}
+            src={`${campground.images[0].url}`}
+            alt="image"
+            width={800}
+            loading="lazy"
+          />
+          <IconButton
+            sx={{
+              position: "absolute",
+              top: "30%",
+              left: 35,
+              transform: "translateY(-50%)",
+              color: "white",
+              backgroundColor: "rgba(0,0,0,0.3)",
+              "&:hover": { backgroundColor: "rgba(0,0,0,0.7)" },
+            }}
+          >
+            <ArrowBackIosNewIcon />
+          </IconButton>
+
+          <IconButton
+            sx={{
+              position: "absolute",
+              top: "30%",
+              right: 35,
+              transform: "translateY(-50%)",
+              color: "white",
+              backgroundColor: "rgba(0,0,0,0.5)",
+              "&:hover": { backgroundColor: "rgba(0,0,0,0.7)" },
+            }}
+          >
+            <ArrowForwardIosIcon />
+          </IconButton>
+        </Box>
+      </Box> */}
+    </>
   );
 }
