@@ -46,7 +46,17 @@ export default function CampgroundDetail({
         justifySelf={"center"}
         height={"100vh"}
       >
-        <Card sx={{ height: "800px" }}>
+        <Card
+          sx={{
+            maxHeight: "90vh",
+            width: { xs: "90vw", sm: 600, md: 800, lg: 1200 }, // responsive widths
+            maxWidth: "100%", // never overflow viewport width
+            display: "flex",
+            flexDirection: "column",
+            bgcolor: "pink",
+            height: "1000px",
+          }}
+        >
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: avatarIconColor }} aria-label="recipe">
@@ -61,16 +71,42 @@ export default function CampgroundDetail({
             title={campground.title}
             subheader={campground.location}
           />
-          <Grid container sx={{ bgcolor: "blue" }} spacing={2}>
-            <Grid item>
-              <h1>alsdkj</h1>
-            </Grid>
-            <Grid item>
-              <Box sx={{ bgcolor: "red" }}>
-                <h1>alsdkj</h1>
-              </Box>
-            </Grid>
-          </Grid>
+          <Box
+            display="grid"
+            sx={{
+              gridTemplateColumns: {
+                sm: "1fr", // 1 column on extra-small (mobile)
+                md: "1fr 1fr", // 2 columns on small screens and up
+              },
+              overflowY: "auto",
+              flexGrow: 1,
+              maxHeight: 500, // limit height
+            }}
+            gap={1}
+            margin={0.5}
+          >
+            <Box sx={{ gridRow: "span 2", bgcolor: "lightblue" }}>
+              <ImageList
+                // sx={{ sm: 600, md: 800, lg: 1200 }}
+                cols={1}
+                rowHeight={300}
+              >
+                {campground.images.map((image) => (
+                  <ImageListItem key={image.url}>
+                    <img
+                      // width={{ sm: 600, md: 500 }}
+                      srcSet={`${image.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                      src={`${image.url}?w=164&h=164&fit=crop&auto=format`}
+                      alt="d"
+                      loading="lazy"
+                    />
+                  </ImageListItem>
+                ))}
+              </ImageList>
+            </Box>
+            <Box sx={{ bgcolor: "black" }}>ONEBOX</Box>
+            <Box sx={{ bgcolor: "lightblue" }}>TWOBOX</Box>
+          </Box>
           <CardContent>
             <Typography variant="body2" sx={{ color: "text.secondary" }}>
               This impressive paella is a perfect party dish and a fun meal to
@@ -92,8 +128,48 @@ export default function CampgroundDetail({
           </CardActions>
         </Card>
       </Box>
+    </>
+  );
+}
 
-      {/* <Box sx={style}>
+{
+  /* <Grid container spacing={2}>
+        <Grid item size={{ xs: 12, lg: 4 }}>
+          Left (full width on small, half on medium+)
+        </Grid>
+        <Grid item size={{ xs: 12, lg: 4 }}>
+          Right (same behavior)
+        </Grid>
+        <Grid item size={{ xs: 12, lg: 4 }}>
+          Left (full width on small, half on medium+)
+        </Grid>
+        <Grid item size={{ xs: 12, lg: 4 }}>
+          Right (same behavior)
+        </Grid>
+        <Grid item size={{ xs: 12, lg: 4 }}>
+          Right (same behavior)
+        </Grid>
+      </Grid> */
+}
+
+{
+  /* <Box
+        display="grid"
+        gridTemplateColumns="1fr 2fr 1fr"
+        gridAutoRows="150px"
+        gap={2}
+      >
+        <Box sx={{ gridRow: "span 2", bgcolor: "lightblue" }}>Spans 2 rows</Box>
+        <Box sx={{ bgcolor: "lightgreen" }}>Item 2</Box>
+        <Box sx={{ bgcolor: "lightcoral" }}>Item 3</Box>
+        <Box sx={{ bgcolor: "lightgoldenrodyellow" }}>Item 4</Box>
+        <Box sx={{ bgcolor: "lightpink" }}>Item 5</Box>
+        <Box sx={{ bgcolor: "lightsalmon" }}>Item 6</Box>
+      </Box> */
+}
+
+{
+  /* <Box sx={style}>
         <Typography variant="h4">{campground.title}</Typography>
         <Box>
           <img
@@ -131,7 +207,24 @@ export default function CampgroundDetail({
             <ArrowForwardIosIcon />
           </IconButton>
         </Box>
-      </Box> */}
-    </>
-  );
+      </Box> */
+}
+
+{
+  /* <ImageList
+                sx={{ width: 500, height: 450 }}
+                cols={1}
+                rowHeight={164}
+              >
+                {campground.images.map((image) => (
+                  <ImageListItem key={image.url}>
+                    <img
+                      srcSet={`${image.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                      src={`${image.url}?w=164&h=164&fit=crop&auto=format`}
+                      alt="d"
+                      loading="lazy"
+                    />
+                  </ImageListItem>
+                ))}
+              </ImageList> */
 }
