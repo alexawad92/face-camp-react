@@ -87,11 +87,20 @@ export default function CampgroundCard({ campground }) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <CampgroundDetail
-          campground={campground}
-          avatarIconColor={avatarIconColor}
-          onClose={handleClose}
-        />
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          height="100vh"
+          sx={{ width: "100vw" }}
+          onClick={handleClose} // to allow model to close if click is within this box (but outside inner one)
+        >
+          <CampgroundDetail
+            campground={campground}
+            avatarIconColor={avatarIconColor}
+            onClose={handleClose}
+          />
+        </Box>
       </Modal>
     </>
   );

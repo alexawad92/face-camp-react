@@ -4,22 +4,31 @@ import "@maptiler/sdk/dist/maptiler-sdk.css";
 import "./map.css";
 import Box from "@mui/material/Box";
 
-export default function Map() {
+export default function Map({ campground }) {
+  const l = campground.geometry.coordinates[0];
+  const l2 = campground.geometry.coordinates[1];
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const center = { lng: -157.9253, lat: 21.4732 };
+  const center = { lng: l, lat: l2 };
   const [zoom] = useState(9.79);
   maptilersdk.config.apiKey = "vfCT5mYblPd5LyyNV4VO";
 
   useEffect(() => {
-    if (map.current) return; // stops map from intializing more than once
+    if (map.current) {
+      map.current.scrollZoom.disable();
+      return; // stops map from intializing more than once
+    }
 
     map.current = new maptilersdk.Map({
       container: mapContainer.current,
       style: maptilersdk.MapStyle.STREETS,
       center: [center.lng, center.lat],
       zoom: zoom,
+      geolocateControl: false,
     });
+    new maptilersdk.Marker({ color: "#FF0000" })
+      .setLngLat([l, l2])
+      .addTo(map.current);
   }, [center.lng, center.lat, zoom]);
 
   return (
