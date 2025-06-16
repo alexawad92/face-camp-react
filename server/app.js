@@ -7,6 +7,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const campgroundRoutes = require("./routes/campground");
 const userRoutes = require("./routes/user");
+const session = require("express-session");
 
 const Campground = require("./models/campground");
 const User = require("./models/user");
@@ -34,25 +35,25 @@ app.use(cors());
 app.use(morgan("tiny"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// const sessionConfig = {
-//   secret: "thisshouldbeabettersecret!",
-//   resave: false,
-//   saveUninitialized: true,
-//   cookie: {
-//     //                    ms     s    m    h    d => set to expire in a week
-//     httpOnly: true,
-//     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-//     maxAge: 1000 * 60 * 60 * 24 * 7,
-//   },
-// };
-// app.use(session(sessionConfig));
+const sessionConfig = {
+  secret: "thisshouldbeabettersecret!",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    //                    ms     s    m    h    d => set to expire in a week
+    httpOnly: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  },
+};
+app.use(session(sessionConfig));
 
-// // use poassport for authentication
-// app.use(passport.initialize());
-// app.use(passport.session());
-// passport.use(new LocalStrategy(User.authenticate()));
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
+// use poassport for authentication
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 // setup express
 
 //campground route
@@ -67,7 +68,7 @@ app.use(express.json());
 // });
 
 app.use("/api/campgrounds", campgroundRoutes);
-app.use("/api/", userRoutes);
+app.use("/api", userRoutes);
 
 // listen to //localhost:5000
 app.listen(5000, () => {

@@ -8,9 +8,13 @@ import {
   Grid,
   Paper,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "./context/AuthContext";
 import axios from "axios";
 
 export default function Register() {
+  const navigate = useNavigate();
+  const { setAuth } = useAuth(); // <-- get setAuth from context here
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -24,10 +28,19 @@ export default function Register() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
-    axios.post("/api/register", formData);
+    const response = await axios.post("/api/register", formData, {
+      withCredentials: true,
+    });
+    console.log(response.data.message);
+    setAuth({
+      isAuthenticated: true,
+      user: response.data.user,
+      loading: false,
+    });
+    navigate(`/campgrounds`);
     // Add your form submission logic here (e.g., API call)
   };
   return (

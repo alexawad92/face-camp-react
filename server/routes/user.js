@@ -9,14 +9,14 @@ router
   .route("/register")
   // Create user
   .post(catchAsync(users.createUser));
-
+router.route("/check-auth").get(users.IsAuthenticated);
 // router.route('/login')
 //     // Render user login form
 //     .get(users.renderLoginForm)
 //     // Login
 //     .post(storeReturnTo, passport.authenticate('local', {failureFlash:true, failureRedirect: '/login'}),users.login)
 
-// // Logout
-// router.get("/logout", users.logout);
+// Logout
+router.post("/logout", users.logout);
 
 module.exports = router;
