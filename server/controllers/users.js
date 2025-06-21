@@ -37,12 +37,13 @@ module.exports.renderLoginForm = (req, res) => {
 };
 
 module.exports.login = (req, res) => {
-  console.log("line 32");
-  req.flash("success", "Welcome back!");
-  console.log("line 34");
-  const redirectUrl = res.locals.returnTo || "/campgrounds";
-  delete res.locals.returnTo;
-  res.redirect(redirectUrl);
+  req.login(registeredUser, (err) => {
+    if (err) return next(err);
+    res.status(201).json({
+      message: "Logged in successfully",
+      user: { id: registeredUser._id, username: registeredUser.username },
+    });
+  });
 };
 
 module.exports.IsAuthenticated = (req, res) => {
@@ -55,8 +56,12 @@ module.exports.IsAuthenticated = (req, res) => {
 
 module.exports.logout = (req, res) => {
   req.logout((err) => {
-    if (err) return res.status(500).json({ message: "Logout failed" });
-    res.clearCookie("connect.sid"); // optional: clear the session cookie
-    res.json({ message: "Logged out" });
+    if (err) {
+      return res.status(500).json({ message: "Logout failed" });
+    }
+    req.session.destroy(() => {
+      res.clearCookie("connect.sid"); // optional: clear cookie
+      res.json({ message: "Logged out successfully" });
+    });
   });
 };

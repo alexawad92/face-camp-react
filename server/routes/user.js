@@ -10,6 +10,13 @@ router
   // Create user
   .post(catchAsync(users.createUser));
 router.route("/check-auth").get(users.IsAuthenticated);
+
+router.post("/login", passport.authenticate("local"), (req, res) => {
+  res.json({
+    message: "Logged in successfully",
+    user: { id: req.user._id, username: req.user.username },
+  });
+});
 // router.route('/login')
 //     // Render user login form
 //     .get(users.renderLoginForm)

@@ -3,12 +3,17 @@ const { cloudinary } = require("../cloudinary");
 const maptilerClient = require("@maptiler/client");
 maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
 module.exports.index = async (req, res, next) => {
-   const campgrounds = await Campground.find({});
-    res.json(campgrounds);
+  const campgrounds = await Campground.find({})
+    .populate({ path: "author" })
+    .populate({
+      path: "reviews",
+      populate: { path: "author" },
+    });
+  res.json(campgrounds);
 };
 
 module.exports.renderNewForm = async (req, res, next) => {
-    console.log("renderNewForm");
+  console.log("renderNewForm");
 
   res.render("campgrounds/new");
   // here
@@ -78,8 +83,8 @@ module.exports.showCampground = async (req, res, next) => {
 
   console.log(imageLink);
   res.json(campground);
-//   res.send("HI");
-//  res.render("campgrounds/show", { campground, imageLink });
+  //   res.send("HI");
+  //  res.render("campgrounds/show", { campground, imageLink });
 };
 
 module.exports.renderEditForm = async (req, res, next) => {
@@ -108,7 +113,6 @@ module.exports.updateCampground = async (req, res, next) => {
   const campground = await Campground.findByIdAndUpdate(id, {
     ...req.body.campground,
   });
-
 
   var newlocation = req.body.campground.location;
   // console.log(newlocation);

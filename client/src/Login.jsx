@@ -12,12 +12,11 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import axios from "axios";
 
-export default function Register() {
+export default function Login() {
   const navigate = useNavigate();
   const { setAuth } = useAuth(); // <-- get setAuth from context here
   const [formData, setFormData] = useState({
     username: "",
-    email: "",
     password: "",
   });
 
@@ -31,7 +30,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
-    const response = await axios.post("/api/register", formData, {
+    const response = await axios.post("/api/login", formData, {
       withCredentials: true,
     });
     console.log(response.data.message);
@@ -47,7 +46,7 @@ export default function Register() {
     <Container maxWidth="sm">
       <Paper elevation={5} sx={{ padding: 4, mt: 8, height: "50vh" }}>
         <Typography variant="h5" align="center" gutterBottom>
-          Sign Up
+          Login
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
           <Grid flexDirection={"column"} display={"flex"} container spacing={3}>
@@ -66,19 +65,6 @@ export default function Register() {
             </Grid>
             <Grid item>
               <Typography variant="subtitle1" gutterBottom>
-                Email
-              </Typography>
-              <TextField
-                name="email"
-                type="email"
-                fullWidth
-                required
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item>
-              <Typography variant="subtitle1" gutterBottom>
                 Password
               </Typography>
               <TextField
@@ -92,7 +78,7 @@ export default function Register() {
             </Grid>
             <Grid item>
               <Button type="submit" variant="contained" fullWidth>
-                Sign Up
+                Login
               </Button>
             </Grid>
           </Grid>

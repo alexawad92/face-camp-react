@@ -20,6 +20,7 @@ import Grid from "@mui/material/Grid";
 import CampgroundDetail from "./CampgroundDetail";
 
 export default function CampgroundCard({ campground }) {
+  console.log(campground);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate(); // ✅ This must be inside the component
   if (!campground || !campground.title) return null;

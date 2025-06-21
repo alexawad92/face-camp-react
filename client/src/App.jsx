@@ -4,6 +4,7 @@ import Home from "./Home";
 import CampgroundsList from "./CampgroundsList";
 import CampgroundDetail from "./CampgroundDetail";
 import Register from "./Register";
+import Login from "./Login";
 import Navbar from "./Navbar";
 
 import Container from "@mui/material/Container";
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/campgrounds" element={<CampgroundsList />} />
           <Route path="/campgrounds/:id" element={<CampgroundDetail />} />
           <Route path="/Register" element={<Register />} />
+          <Route path="/Login" element={<Login />} />
         </Routes>
       </Router>
     </Container>
