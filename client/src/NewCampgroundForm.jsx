@@ -35,9 +35,7 @@ export default function NewCampgroundForm() {
       ...formData,
       [e.target.name]: e.target.value,
     });
-    if (e.target.name === "title") {
-      console.log("setting title");
-    }
+    console.log(e.target.name);
   };
 
   const handleSubmit = async (e) => {
@@ -67,9 +65,20 @@ export default function NewCampgroundForm() {
               <TextField
                 fullWidth
                 type="file"
-                name="image"
-                value={formData.image}
+                name="images"
+                value={formData.images}
                 onChange={handleChange}
+                slotProps={{
+                  input: {
+                    multiple: true,
+                    onChange: (e) => {
+                      setFormData({
+                        ...formData,
+                        images: Array.from(e.target.files),
+                      });
+                    },
+                  },
+                }}
               />
             </Grid>
             <Grid
