@@ -55,7 +55,19 @@ export default function CampgroundDetail({
     }
   }
 
-  function handlecancel() {}
+  function handleLeftArrowClick() {
+    console.log(currentImageIndex);
+    setCurrentImageIndex((prevValue) => {
+      console.log(prevValue);
+      prevValue -= 1;
+      if (prevValue < 0) {
+        return campground.images.length - 1;
+      } else {
+        return prevValue;
+      }
+    });
+  }
+
   return (
     <>
       <Box
@@ -78,7 +90,6 @@ export default function CampgroundDetail({
             margin="10px 0"
             height={"80px"}
           >
-            {/* LEFT: Avatar + Title + Location */}
             <Box display="flex" alignItems="center">
               <Avatar
                 sx={{
@@ -117,7 +128,6 @@ export default function CampgroundDetail({
               </Box>
             </Box>
 
-            {/* RIGHT: Price */}
             <Button variant="text" onClick={onClose}>
               Close
             </Button>
@@ -167,6 +177,7 @@ export default function CampgroundDetail({
                 backgroundColor: "rgba(0,0,0,0.5)",
                 "&:hover": { backgroundColor: "rgba(0,0,0,0.7)" },
               }}
+              onClick={handleLeftArrowClick}
             >
               <ArrowForwardIosIcon />
             </IconButton>
@@ -190,176 +201,11 @@ export default function CampgroundDetail({
               <Typography variant="h5" gutterBottom align="center">
                 Reviews
               </Typography>
-              <Typography>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam
-                iste et voluptatem eos? Dolorem officiis temporibus ut
-                doloribus, illum quia tempora incidunt iusto id dolores et
-                aliquam voluptate explicabo aut?
-              </Typography>
+              <Typography>{campground.description}</Typography>
             </Box>
           </Container>
         </Container>
-        {/* <Card
-          sx={{
-            maxHeight: "90vh",
-            width: { xs: "90vw", sm: 600, md: 800, lg: 1200 }, // responsive widths
-            maxWidth: "100%", // never overflow viewport width
-            display: "flex",
-            flexDirection: "column",
-            bgcolor: "pink",
-          }}
-        >
-          <CardHeader
-            avatar={
-              <Avatar sx={{ bgcolor: avatarIconColor }} aria-label="recipe">
-                {campground.title[0]}
-              </Avatar>
-            }
-            action={
-              <IconButton aria-label="settings">
-                <MoreVertIcon />
-              </IconButton>
-            }
-            title={campground.title}
-            subheader={campground.location}
-          />
-
-          <ImageList
-            sx={{ width: { sm: 300, md: 600, lg: 1200 }, height: 450 }}
-            cols={1}
-            rowHeight={500}
-          >
-            {campground.images.map((image) => (
-              <ImageListItem key={image.url}>
-                <img
-                  sx:{{width: { sm: 300, md: 600, lg: 1200 }}}
-                  srcSet={`${image.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                  src={`${image.url}?w=164&h=164&fit=crop&auto=format`}
-                  alt={campground.title}
-                  loading="lazy"
-                />
-              </ImageListItem>
-            ))}
-          </ImageList>
-
-          <CardContent>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              This impressive paella is a perfect party dish and a fun meal to
-              cook together with your guests. Add 1 cup of frozen peas along
-              with the mussels, if you like.
-            </Typography>
-          </CardContent>
-          <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
-            </IconButton>
-            <IconButton aria-label="share">
-              <ShareIcon
-                onClick={() => {
-                  onClose();
-                }}
-              />
-            </IconButton>
-          </CardActions>
-        </Card> */}
       </Box>
     </>
   );
-}
-
-{
-  /* <Grid container spacing={2}>
-        <Grid item size={{ xs: 12, lg: 4 }}>
-          Left (full width on small, half on medium+)
-        </Grid>
-        <Grid item size={{ xs: 12, lg: 4 }}>
-          Right (same behavior)
-        </Grid>
-        <Grid item size={{ xs: 12, lg: 4 }}>
-          Left (full width on small, half on medium+)
-        </Grid>
-        <Grid item size={{ xs: 12, lg: 4 }}>
-          Right (same behavior)
-        </Grid>
-        <Grid item size={{ xs: 12, lg: 4 }}>
-          Right (same behavior)
-        </Grid>
-      </Grid> */
-}
-
-{
-  /* <Box
-        display="grid"
-        gridTemplateColumns="1fr 2fr 1fr"
-        gridAutoRows="150px"
-        gap={2}
-      >
-        <Box sx={{ gridRow: "span 2", bgcolor: "lightblue" }}>Spans 2 rows</Box>
-        <Box sx={{ bgcolor: "lightgreen" }}>Item 2</Box>
-        <Box sx={{ bgcolor: "lightcoral" }}>Item 3</Box>
-        <Box sx={{ bgcolor: "lightgoldenrodyellow" }}>Item 4</Box>
-        <Box sx={{ bgcolor: "lightpink" }}>Item 5</Box>
-        <Box sx={{ bgcolor: "lightsalmon" }}>Item 6</Box>
-      </Box> */
-}
-
-{
-  /* <Box sx={style}>
-        <Typography variant="h4">{campground.title}</Typography>
-        <Box>
-          <img
-            srcSet={`${campground.images[0].url}`}
-            src={`${campground.images[0].url}`}
-            alt="image"
-            width={800}
-            loading="lazy"
-          />
-          <IconButton
-            sx={{
-              position: "absolute",
-              top: "30%",
-              left: 35,
-              transform: "translateY(-50%)",
-              color: "white",
-              backgroundColor: "rgba(0,0,0,0.3)",
-              "&:hover": { backgroundColor: "rgba(0,0,0,0.7)" },
-            }}
-          >
-            <ArrowBackIosNewIcon />
-          </IconButton>
-
-          <IconButton
-            sx={{
-              position: "absolute",
-              top: "30%",
-              right: 35,
-              transform: "translateY(-50%)",
-              color: "white",
-              backgroundColor: "rgba(0,0,0,0.5)",
-              "&:hover": { backgroundColor: "rgba(0,0,0,0.7)" },
-            }}
-          >
-            <ArrowForwardIosIcon />
-          </IconButton>
-        </Box>
-      </Box> */
-}
-
-{
-  /* <ImageList
-                sx={{ width: 500, height: 450 }}
-                cols={1}
-                rowHeight={164}
-              >
-                {campground.images.map((image) => (
-                  <ImageListItem key={image.url}>
-                    <img
-                      srcSet={`${image.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                      src={`${image.url}?w=164&h=164&fit=crop&auto=format`}
-                      alt="d"
-                      loading="lazy"
-                    />
-                  </ImageListItem>
-                ))}
-              </ImageList> */
 }

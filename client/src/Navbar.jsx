@@ -1,6 +1,8 @@
 import { useAuth } from "./context/AuthContext";
 import Link from "@mui/material/Link";
 import LoginButton from "./LoginButton";
+import AddIcon from "@mui/icons-material/Add";
+import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -40,14 +42,16 @@ export default function Navbar() {
         <>
           <span>Welcome, {auth.user.username}</span>
           <LoginButton text="Logout" OnClick={handleLogout} />
+          <Link to="/campgrounds/new">
+            <Button variant="contained" startIcon={<AddIcon />}>
+              Add New Campground
+            </Button>
+          </Link>
         </>
       ) : (
         <>
           <LoginButton text="Login" OnClick={handleLogin} />
           <LoginButton text="Register" OnClick={handleRegister} />
-
-          {/* <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link> */}
         </>
       )}
     </nav>

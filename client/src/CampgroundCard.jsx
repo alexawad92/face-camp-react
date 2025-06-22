@@ -18,10 +18,13 @@ import ImageListItem from "@mui/material/ImageListItem";
 import Modal from "@mui/material/Modal";
 import Grid from "@mui/material/Grid";
 import CampgroundDetail from "./CampgroundDetail";
-
+import { useAuth } from "./context/AuthContext";
+import DeleteCampgroundButton from "./DeleteCampgroundButton";
 export default function CampgroundCard({ campground }) {
-  console.log(campground);
+  // console.log(campground);
   const [open, setOpen] = useState(false);
+  const { auth, setAuth } = useAuth();
+  // console.log(auth);
   const navigate = useNavigate(); // ✅ This must be inside the component
   if (!campground || !campground.title) return null;
   const handleEditClick = () => {
@@ -75,9 +78,7 @@ export default function CampgroundCard({ campground }) {
             Info
           </Button>
           <Box sx={{ ml: "auto" }}>
-            <Button variant="text" startIcon={<DeleteIcon />}>
-              Delete
-            </Button>
+            <DeleteCampgroundButton campground={campground} />
           </Box>
         </CardActions>
       </Card>
