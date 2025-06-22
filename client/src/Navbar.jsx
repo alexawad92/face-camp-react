@@ -1,10 +1,10 @@
 import { useAuth } from "./context/AuthContext";
-import Link from "@mui/material/Link";
 import LoginButton from "./LoginButton";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const navigate = useNavigate(); // ✅ This must be inside the component

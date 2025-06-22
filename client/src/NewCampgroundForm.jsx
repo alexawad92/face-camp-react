@@ -10,14 +10,24 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
+import Avatar from "@mui/material/Avatar";
+import { InputAdornment } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import FilledInput from "@mui/material/FilledInput";
+import TextareaAutosize from "@mui/material/TextareaAutosize";
+
 import axios from "axios";
-export default function NewCampgroundForm(){
-const navigate = useNavigate();
+export default function NewCampgroundForm() {
+  const navigate = useNavigate();
+  // const [preview, setPreview] = useState(null);
   const { setAuth } = useAuth(); // <-- get setAuth from context here
   const [formData, setFormData] = useState({
     title: "",
     location: "",
-    password: "",
+    description: "",
+    images: [],
+    price: "",
   });
 
   const handleChange = (e) => {
@@ -25,73 +35,95 @@ const navigate = useNavigate();
       ...formData,
       [e.target.name]: e.target.value,
     });
+    if (e.target.name === "title") {
+      console.log("setting title");
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
-    const response = await axios.post("/api/register", formData, {
-      withCredentials: true,
-    });
-    console.log(response.data.message);
-    setAuth({
-      isAuthenticated: true,
-      user: response.data.user,
-      loading: false,
-    });
-    navigate(`/campgrounds`);
-    // Add your form submission logic here (e.g., API call)
   };
   return (
     <Container maxWidth="sm">
-      <Paper elevation={5} sx={{ padding: 4, mt: 8, height: "50vh" }}>
+      <Paper elevation={5} sx={{ padding: 4, mt: 8, height: "60%" }}>
         <Typography variant="h5" align="center" gutterBottom>
-          Sign Up
+          Create New Campground
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
-          <Grid flexDirection={"column"} display={"flex"} container spacing={3}>
+          <Grid flexDirection={"column"} display={"flex"} container spacing={5}>
             <Grid item>
-              <Typography variant="subtitle1" gutterBottom>
-                Username
-              </Typography>
               <TextField
-                name="username"
+                name="title"
                 type="text"
+                label="title"
                 fullWidth
                 required
-                value={formData.username}
+                value={formData.title}
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item>
-              <Typography variant="subtitle1" gutterBottom>
-                Email
-              </Typography>
+            <Grid item size={{ xs: 12 }}>
               <TextField
-                name="email"
-                type="email"
                 fullWidth
-                required
-                value={formData.email}
+                type="file"
+                name="image"
+                value={formData.image}
                 onChange={handleChange}
               />
             </Grid>
+            <Grid
+              flexDirection={"row"}
+              display={"flex"}
+              container
+              spacing={3}
+              alignItems={"center"}
+            >
+              <Grid item size={{ xs: 12, md: 6 }}>
+                <TextField
+                  fullWidth
+                  label="Location"
+                  name="location"
+                  required
+                  value={formData.location}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item size={{ xs: 12, md: 6 }}>
+                <TextField
+                  fullWidth
+                  label="Price"
+                  name="price"
+                  value={formData.price}
+                  onChange={handleChange}
+                  slotProps={{
+                    input: {
+                      startAdornment: (
+                        <InputAdornment position="start">$</InputAdornment>
+                      ),
+                      endAdornment: (
+                        <InputAdornment position="end">/night</InputAdornment>
+                      ),
+                    },
+                  }}
+                />
+              </Grid>
+            </Grid>
             <Grid item>
-              <Typography variant="subtitle1" gutterBottom>
-                Password
-              </Typography>
               <TextField
-                name="password"
-                type="password"
-                fullWidth
+                name="description"
+                label="Description"
+                multiline
                 required
-                value={formData.password}
+                minRows={5}
+                fullWidth
+                value={formData.description}
                 onChange={handleChange}
               />
             </Grid>
             <Grid item>
               <Button type="submit" variant="contained" fullWidth>
-                Sign Up
+                Create
               </Button>
             </Grid>
           </Grid>
