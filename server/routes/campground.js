@@ -12,8 +12,8 @@ router
   .get(catchAsync(campgrounds.index))
   // Create campground
   .post(
-    isLoggedIn,
-    upload.array("image"),
+    // isLoggedIn,
+    upload.array("images[]"),
     catchAsync(campgrounds.createCampground)
   );
 // .post(upload.single('image'),(req, res)=>{

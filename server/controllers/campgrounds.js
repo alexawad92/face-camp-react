@@ -20,25 +20,32 @@ module.exports.renderNewForm = async (req, res, next) => {
 };
 
 module.exports.createCampground = async (req, res, next) => {
-  console.log("createCampground");
-  const { campground } = req.body;
-  campground.author = req.user._id;
+  console.log("in createCampground");
+  const { title, location, description, price } = req.body;
+  const campground = new Campground({
+    title,
+    location,
+    description,
+    price,
+    author: req.user._id,
+  });
   campground.images = req.files.map((f) => ({
     url: f.path,
     filename: f.filename,
   }));
-  const geoData = await maptilerClient.geocoding.forward(
-    req.body.campground.location,
-    { limit: 1 }
-  );
-  // console.log(geoData.features[0].geometry);
-  // send(geoData.features[0].geometry);
+
+  const geoData = await maptilerClient.geocoding.forward(campground.location, {
+    limit: 1,
+  });
+
   campground.geometry = geoData.features[0].geometry;
-  // console.log("campground is ", campground);
+  console.log("campground is ", campground);
   const camp = new Campground(campground);
   await camp.save();
-  req.flash("success", "Successfully made a new campground!");
-  res.redirect(`/campgrounds/${camp._id}`);
+  res.status(201).json({
+    message: "Successfully made a new campground!",
+    campground: campground,
+  });
 };
 
 module.exports.showCampground = async (req, res, next) => {

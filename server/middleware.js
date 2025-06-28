@@ -5,7 +5,7 @@ const Review = require("./models/review.js");
 
 module.exports.isLoggedIn = (req, res, next) => {
   console.log("MiddleWare isLoggedIn");
-  console.log("Req.User....", req.user);
+  //console.log("Req.User....", req.user);
   if (!req.isAuthenticated()) {
     return res.status(401).json({
       message: "you must be signed in!",

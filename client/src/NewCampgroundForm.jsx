@@ -8,7 +8,7 @@ import {
   Grid,
   Paper,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import Avatar from "@mui/material/Avatar";
 import { InputAdornment } from "@mui/material";
@@ -38,9 +38,21 @@ export default function NewCampgroundForm() {
     console.log(e.target.name);
   };
 
+  const handleFileChange = (e) => {
+    setFormData({
+      ...formData,
+      images: Array.from(e.target.files),
+    });
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
+    const response = await axios.post("/api/campgrounds", formData, {
+      withCredentials: true,
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    console.log("response is " + response);
+    navigate(`/campgrounds`);
   };
   return (
     <Container maxWidth="sm">
@@ -49,7 +61,7 @@ export default function NewCampgroundForm() {
           Create New Campground
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
-          <Grid flexDirection={"column"} display={"flex"} container spacing={5}>
+          <Grid flexDirection={"column"} display={"flex"} container spacing={3}>
             <Grid item>
               <TextField
                 name="title"
@@ -62,24 +74,35 @@ export default function NewCampgroundForm() {
               />
             </Grid>
             <Grid item size={{ xs: 12 }}>
-              <TextField
-                fullWidth
-                type="file"
-                name="images"
-                value={formData.images}
-                onChange={handleChange}
-                slotProps={{
-                  input: {
-                    multiple: true,
-                    onChange: (e) => {
-                      setFormData({
-                        ...formData,
-                        images: Array.from(e.target.files),
-                      });
-                    },
+              <Box
+                component="label"
+                htmlFor="file-upload"
+                sx={{
+                  display: "block",
+                  border: "1px solid rgba(0, 0, 0, 0.23)",
+                  borderRadius: "4px",
+                  padding: "14px",
+                  cursor: "pointer",
+                  fontSize: "16px",
+                  color: "rgba(0, 0, 0, 0.87)",
+                  transition: "border 0.2s ease",
+                  "&:hover": {
+                    borderColor: "#1976d2",
                   },
                 }}
-              />
+              >
+                {formData.images.length
+                  ? formData.images.map((f) => f.name).join(", ")
+                  : "Choose images..."}
+                <input
+                  type="file"
+                  id="file-upload"
+                  multiple
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  style={{ display: "none" }}
+                />
+              </Box>
             </Grid>
             <Grid
               flexDirection={"row"}
