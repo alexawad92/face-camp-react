@@ -7,9 +7,11 @@ export default function DeleteCampgroundButton({ campground }) {
 
   return (
     <>
-      <Button variant="text" disabled={!isOwner} startIcon={<DeleteIcon />}>
-        Delete
-      </Button>
+      {isOwner ? (
+        <Button variant="text" disabled={!isOwner} startIcon={<DeleteIcon />}>
+          Delete
+        </Button>
+      ) : null}
     </>
   );
 }
